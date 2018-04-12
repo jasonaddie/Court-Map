@@ -1,245 +1,543 @@
 <!DOCTYPE html>
 <!-- saved from url=(0053)http://leafletjs.com/examples/choropleth/example.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Courts</title>
-
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Courts Map</title>
 
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
 
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0;
+			}
 
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
+			#map {
+				width: 1050px;
+				height: 562px;
+			}
+			.info {
+				padding: 6px 8px;
+				font: 14px/16px Arial, Helvetica, sans-serif;
+				background: white;
+				background: rgba(255,255,255,0.8);
+				box-shadow: 0 0 15px rgba(0,0,0,0.2);
+				border-radius: 5px;
+			}
+			.info h4 {
+				margin: 0 0 5px;
+				color: #777;
+			}
+			.legend {
+				text-align: left;
+				line-height: 18px;
+				color: #555;
+			}
+			.legend i {
+				width: 18px;
+				height: 18px;
+				float: left;
+				margin-right: 8px;
+				opacity: 0.7;
+			}
 
-	</style>
+			#filters{
+				margin-left:  10px;
+			}
+			#filters div{
+				margin-bottom: 5px;
+			}
+			#filters b{
+				display: inline-block;
+				width: 115px;
+			}
+			#filters button{
+				background-color: #eee;
+				color: black;
+				padding: 4px 8px;
+				-moz-border-radius: 4px;
+				-webkit-border-radius: 4px;
+				border-radius: 4px; /* future proofing */
+				-khtml-border-radius: 4px; /* for old Konqueror browsers */
+			}
+			#filters button:active{
+				background-color: white;
+				color: black;
+			}
+			#filters button.active{
+				background-color: black;
+				color: white;
+			}
+		</style>
+	</head>
+	<body tcap-name="main">
 
-	<style>#map { width: 1050px; height: 562px; }
-.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
-.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
-</head>
-<body tcap-name="main">
+		<div id='map'></div>
+		<div id='filters'>
+			<div><b>Court Types:</b> <span id="filter-court-type"></span></div>
+			<div><b>Case Types:</b> <span id="filter-case-type"></span></div>
+			<div><b>Years:</b> <span id="filter-year"></span></div>
+		</div>
 
-<div id='map'></div>
-<div id='filters'></div>
+		<!-- load the shapes -->
+		<script type="text/javascript" src="./assets/shapes_districts.js"></script>
+		<script type="text/javascript" src="./assets/shapes_regions.js"></script>
+		<script type="text/javascript" src="./assets/shapes_country.js"></script>
 
-<!-- load the shapes -->
-<script type="text/javascript" src="./assets/shapes_districts.js"></script>
-<script type="text/javascript" src="./assets/shapes_regions.js"></script>
-<script type="text/javascript" src="./assets/shapes_country.js"></script>
+		<!-- load the data -->
+		<script type="text/javascript" src="./assets/data_settings.js"></script>
+		<script type="text/javascript" src="./assets/data_country.js"></script>
+		<script type="text/javascript" src="./assets/data_regions.js"></script>
+		<script type="text/javascript" src="./assets/data_districts.js"></script>
 
-<!-- load the data -->
-<script type="text/javascript" src="./assets/data_court_types.js"></script>
-<script type="text/javascript" src="./assets/data_regions.js"></script>
+		<script type="text/javascript">
 
-<script type="text/javascript">
+			var geojson, // store the geojson shapes to load into the map
+					data, // store the data that is currently being used
+					shapes, // store the shapes that is currently being used
+					i, // used in for loops as counter
+					data_item, // used when getting data to load into a shape
+					court_type_id = 'region', // the currently selected court type id
+					court_type, // the currently selected court type
+					case_type_id, // the currently selected case type id
+					case_type, // the currently selected case type
+					case_types, // list of case types that are available in the current data
+					year, // the currently selected year
+					years, // list of years that are available in the current data
+					urlParams, // store querystring values - used to determine what default values are when page loads
+					filter_html, // use to build the filter button html
+					tmp_case_type, // temporarly store a case type object
+					active, // used when setting class for button to indicate that it is active
+					buttons; // used when updating the state of the buttons
 
-	var geojson, i, data_item, court_type, court_type_id;
+			//////////////////////////
+			// URL update functions
+			//////////////////////////
 
-	//////////////////////////
-	// interaction functions
-	//////////////////////////
+			// if the back or forward button is clicked,
+			// reload the map with the correct values
+			window.addEventListener('popstate', function(event) {
+				// TODO - reload the map with the proper values
+			  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+			});
 
-	// load the map shapes and data
-	function reload_map_data(){
-		// remove any shapes that were in the map
-		map.eachLayer(function(layer){
-	    if (layer._url == undefined){
-	    	layer.remove();
-    	}
-		});
+			// update the url so it has querystring values
+			// of the current selections
+			// we do this in case someone shares the page people can
+			// return to the same view
+			function update_url() {
+				// get the current url
+				var url = window.location.href;
+				// set what the querystring parameter values should be
+				var params ={
+					"court_type": court_type_id,
+					"case_type": case_type_id,
+					"year": year
+				};
+				// get the querystring parameter keys
+				// makes it easier to go through each item
+				// in the loop below
+				var keys = Object.keys(params);
 
-		// get the court type
-		court_type = data_court_types.find(function(item){
-			return item.id == court_type_id;
-		});
+				for (i=0; i<keys.length; i++){
+					// see if the key is already in the url
+				  var re = new RegExp("([?&])" + keys[i] + "=.*?(&|$)", "i");
+				  var separator = url.indexOf('?') !== -1 ? "&" : "?";
+				  if (url.match(re)) {
+				  	// the key is already in the url, so update the value
+				    url = url.replace(re, '$1' + keys[i] + "=" + params[keys[i]] + '$2');
+				  }
+				  else {
+				  	// the key is not in the url, so add it
+				    url += separator + keys[i] + "=" + params[keys[i]];
+				  }
+				}
 
-		// update the info box to show the correct court type
-		//info.update();
+				// update the url
+				window.history.pushState(params, null, url);
+			}
 
-		if (court_type){
-			// add the data into the shapes
-			var shape_data = shapes_regions;
-			for (i=0; i < shape_data.features.length; i++) {
-				// get the data for this shape
-				data_item = data_regions.find(function(item){
-					return item.id == shape_data.features[i].properties.id;
+
+
+			//////////////////////////
+			// button interaction functions
+			//////////////////////////
+
+			// load the map shapes and data
+			function load_map_data(){
+				// remove any shapes that were in the map
+				map.eachLayer(function(layer){
+					// if the layer has a url, then it is the map tiles and we want to keep this
+					// so only remove layers that do not have a url
+			    if (layer._url == undefined){
+			    	layer.remove();
+		    	}
 				});
 
-				if (data_item){
-					shape_data.features[i].properties.name = data_item.name;
-					shape_data.features[i].properties.count = data_item[court_type.id];
-					shape_data.features[i].properties.court_type = court_type.name;
+				// update the info box to show the correct filter selections
+				info.update();
+
+				if (data && court_type && case_type && year){
+					// get the correct shapes to show
+					shapes = eval(court_type.shape_variable);
+
+					// add the data into the shapes
+					for (i=0; i < shapes.features.length; i++) {
+						// get the data for this shape
+						data_item = data[year].find(function(item){
+							return item.id == shapes.features[i].properties.id;
+						});
+
+						// add the data
+						if (data_item){
+							shapes.features[i].properties.name = data_item.name;
+							shapes.features[i].properties.count = data_item[case_type_id];
+						}
+					}
+				}else{
+					console.log('court type not found!')
+				}
+
+				// load the shapes and data
+				geojson = L.geoJson(shapes, {
+					style: style,
+					onEachFeature: onEachFeature
+				}).addTo(map);
+			}
+
+
+			// update the active status for a set of buttons
+			function update_button_status(buttons, button_make_active){
+				for (i = 0; i < buttons.length; i++) {
+					if (buttons[i] == button_make_active){
+						// set the active status for this button
+						buttons[i].classList.add('active');
+					} else {
+						// remove the active status for this button
+				    buttons[i].classList.remove('active');
+					}
 				}
 			}
-		}else{
-			console.log('court type not found!')
-		}
 
-		// load the shape data
-		geojson = L.geoJson(shape_data, {
-			style: style,
-			onEachFeature: onEachFeature
-		}).addTo(map);
-	}
+			// this function is called when a button is clicked
+			// get the current button selections
+			// and then update the map
+			function update_data(){
+				// get the ids of the buttons that are active
+				court_type_id = document.querySelector('button.court_type.active').getAttribute('data-id');
+				case_type_id = document.querySelector('button.case_type.active').getAttribute('data-id');
+				year = document.querySelector('button.year.active').getAttribute('data-id');
 
+				// get a reference to the data objects for the selected items
+				court_type = data_court_types.find(function(item){
+					return item.id == court_type_id;
+				});
+				case_type = data_case_types.find(function(item){
+					return item.id == case_type_id;
+				});
 
-	// update the cour types
-	function update_court_type(e){
-		court_type_id = e.getAttribute('data-id');
+				// get a reference to the data that is to be processed
+				data = eval(court_type.data_variable);
 
-		reload_map_data();
-	}
+			}
 
-	//////////////////////////
-	// get the court types and
-	// create the filter buttons
-	//////////////////////////
+			// update the button active status and then update the map
+			function update_everything(selector, e){
+				// update the active status for these buttons
+				buttons = document.querySelectorAll(selector);
+				update_button_status(buttons, e);
 
-	// get the court type
-	court_type_id = "criminal";
-	court_type = data_court_types.find(function(item){
-		return item.id == court_type_id;
-	});
+				// update the data based on the current selections
+				update_data();
 
-	// create the court type filter buttons
-	var filter_html = '';
-	for(i=0; i<data_court_types.length; i++){
-		filter_html += '<button data-id=' + data_court_types[i].id + ' onclick="update_court_type(this)">' + data_court_types[i].name + '</button>';
-	}
-	document.getElementById('filters').innerHTML = filter_html;
+				// update the map with the correct shapes and data
+				load_map_data();
 
+				// update the url with the parameter values
+				update_url();
+			}
 
+			//////////////////////////
+			// functions that are called
+			// when buttons are clicked
+			//////////////////////////
 
-	//////////////////////////
-	// initalize the map
-	//////////////////////////
+			// court type button was selected
+			// update the active state for these set of buttons
+			// update the map
+			function update_court_type(e){
+				update_everything('button.court_type', e);
 
-	// define the map object
-	var map = L.map('map').setView([41.35, 74.70], 7);
+				// TODO - when court changes, update the case type and year button for they may be different
+			}
 
-	// load the map tiles
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 9,
-		id: 'mapbox.light'
-	}).addTo(map);
+			// case type button was selected
+			// update the active state for these set of buttons
+			// update the map
+			function update_case_type(e){
+				update_everything('button.case_type', e);
+			}
 
-
-	// popup control
-	var info = L.control();
-
-	info.onAdd = function (map) {
-		this._div = L.DomUtil.create('div', 'info');
-		this.update();
-		return this._div;
-	};
-
-	info.update = function (props) {
-		this._div.innerHTML = '<h4>Number of ' + court_type.name + ' Court Cases</h4>' +  (props ?
-			'<b>' + props.name + '</b>: ' + props.count
-			: 'Hover over a region');
-	};
-
-	info.addTo(map);
+			// year button was selected
+			// update the active state for these set of buttons
+			// update the map
+			function update_year(e){
+				update_everything('button.year', e);
+			}
 
 
-	// get color depending on population count value
-	function getColor(d) {
-		return d > 1000 ? '#800026' :
-				d > 800  ? '#BD0026' :
-				d > 500  ? '#E31A1C' :
-				d > 300  ? '#FC4E2A' :
-				d > 50   ? '#FD8D3C' :
-				d > 20   ? '#FEB24C' :
-				d > 10   ? '#FED976' :
-							'#FFEDA0';
-	}
-
-	// set the style for each shape in the map
-	function style(feature) {
-		return {
-			weight: 2,
-			opacity: 1,
-			color: 'white',
-			dashArray: '3',
-			fillOpacity: 0.7,
-			fillColor: getColor(feature.properties.count)
-		};
-	}
-
-	// set the style when hovering over the shape
-	function highlightFeature(e) {
-		var layer = e.target;
-
-		layer.setStyle({
-			weight: 5,
-			color: '#666',
-			dashArray: '',
-			fillOpacity: 0.7
-		});
-
-		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-			layer.bringToFront();
-		}
-
-		info.update(layer.feature.properties);
-	}
-
-	// reset the style when leave the shape
-	function resetHighlight(e) {
-		geojson.resetStyle(e.target);
-		info.update();
-	}
-
-	// zoom in the map on the selected shape
-	function zoomToFeature(e) {
-		map.fitBounds(e.target.getBounds());
-	}
-
-	// register events for each shape
-	function onEachFeature(feature, layer) {
-		layer.on({
-			mouseover: highlightFeature,
-			mouseout: resetHighlight,
-			click: zoomToFeature
-		});
-	}
-
-	// create the legend
-	var legend = L.control({position: 'bottomright'});
-
-	legend.onAdd = function (map) {
-
-		var div = L.DomUtil.create('div', 'info legend'),
-			grades = [0, 10, 20, 50, 300, 500, 800, 1000],
-			labels = [],
-			from, to;
-
-		for (i = 0; i < grades.length; i++) {
-			from = grades[i];
-			to = grades[i + 1];
-
-			labels.push(
-				'<i style="background:' + getColor(from + 1) + '"></i> ' +
-				from + (to ? '&ndash;' + to : '+'));
-		}
-
-		div.innerHTML = labels.join('<br>');
-		return div;
-	};
-	legend.addTo(map);
-
-	reload_map_data();
-
-</script>
+			//////////////////////////
+			//////////////////////////
+			//////////////////////////
+			// THE FOLLOWING CODE AUTOMATICALLY
+			// RUNS WHEN THE PAGE IS LOADED
+			//////////////////////////
+			//////////////////////////
+			//////////////////////////
 
 
+			// get the querystring values from the url, if there are any
+			// the values are stored in urlParams
+			(window.onpopstate = function () {
+			    var match,
+			        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+			        search = /([^&=]+)=?([^&]*)/g,
+			        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			        query  = window.location.search.substring(1);
+
+			    urlParams = {};
+			    while (match = search.exec(query))
+			       urlParams[decode(match[1])] = decode(match[2]);
+			})();
+
+			//////////////////////////
+			// if there are values from the querystring
+			// use them as the default values for the buttons
+			// that should be selected
+			//////////////////////////
+		// TODO: check that the values are valid
+			if (urlParams['court_type']){
+				court_type_id = urlParams['court_type'];
+			}
+			if (urlParams['case_type']){
+				case_type_id = urlParams['case_type'];
+			}
+			if (urlParams['year']){
+				year = urlParams['year'];
+			}
+
+			//////////////////////////
+			// get the data we
+			// should be working with
+			//////////////////////////
+
+			// get the case type
+			court_type = data_court_types.find(function(item){
+				return item.id == court_type_id;
+			});
+
+			// get a reference to the data that is to be processed
+			data = eval(court_type.data_variable);
 
 
+			//////////////////////////
+			// if there are any default values that do not exist,
+			// set them using values from the data
+			//////////////////////////
 
-</body></html>
+			// if year is not already defined by a default value, get the most recent year in the data
+			// the years are automatically sorted so have to use the last key to ge the most recent year
+			if (year == undefined){
+				year = Object.keys(data).slice(-1)[0];
+			}
+
+			// if case type is not already defined by a default value, get the first case type in the data
+			if (case_type_id == undefined){
+				// look at the first data item for the year,
+				// then look at the 3rd item to get the first case type listed
+				case_type_id = Object.keys(data[year][0])[2];
+			}
+			case_type = data_case_types.find(function(item){
+				return item.id == case_type_id;
+			});
+
+
+			//////////////////////////
+			// build the filter buttons for each filter
+			//////////////////////////
+
+			// function to create the filter button html
+			function build_button(button_type, active, id, text, fn){
+				return '<button class="' + button_type + ' ' + active + '" data-id="' + id + '" onclick="' + fn + '(this)">' + text + '</button>';
+			}
+
+			// court types
+			filter_html = '';
+			for(i=0; i<data_court_types.length; i++){
+				// determine if this button needs to be highlighted to show that it is currently active
+				active = court_type_id == data_court_types[i].id ? 'active' : '' ;
+				// build the button
+				filter_html += build_button('court_type', active, data_court_types[i].id, data_court_types[i].name, 'update_court_type');
+			}
+			document.getElementById('filter-court-type').innerHTML = filter_html;
+
+			// years
+			// - have to get list of possible years from the data
+			years = Object.keys(data).reverse(); // using reverse because the years get sorted and we want the most recent first
+			filter_html = '';
+			for(i=0; i<years.length; i++){
+				// determine if this button needs to be highlighted to show that it is currently active
+				active = year == years[i] ? 'active' : '' ;
+				// build the button
+				filter_html += build_button('year', active, years[i], years[i], 'update_year');
+			}
+			document.getElementById('filter-year').innerHTML = filter_html;
+
+			// case types
+			// - have to get list of possible case types from the data
+			case_types = Object.keys(data[year][0])
+			// remove the id and name keys since they are not case types
+			case_types.splice(0,2);
+			filter_html = '';
+			for(i=0; i<case_types.length; i++){
+				// get a reference to the case type object so we can get the id and name
+				tmp_case_type = data_case_types.find(function(item){
+					return item.id == case_types[i];
+				});
+
+				// determine if this button needs to be highlighted to show that it is currently active
+				active = case_type_id == data_case_types[i].id ? 'active' : '' ;
+				// build the button
+				filter_html += build_button('case_type', active, tmp_case_type.id, tmp_case_type.name, 'update_case_type');
+			}
+			document.getElementById('filter-case-type').innerHTML = filter_html;
+
+
+			//////////////////////////
+			//////////////////////////
+			// create the map
+			//////////////////////////
+			//////////////////////////
+
+			// define the map object
+			var map = L.map('map').setView([41.35, 74.70], 7);
+
+			// load the map tiles
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+				maxZoom: 9,
+				id: 'mapbox.light'
+			}).addTo(map);
+
+
+			// popup control
+			var info = L.control();
+
+			info.onAdd = function (map) {
+				this._div = L.DomUtil.create('div', 'info');
+				this.update();
+				return this._div;
+			};
+
+			info.update = function (props) {
+				this._div.innerHTML = '<h4>' + year + ' ' + court_type.name + ' Courts: ' + case_type.name + ' Cases</h4>' +
+					(props ? '<b>' + props.name + '</b>: ' + props.count : 'Hover over a region');
+			};
+			info.addTo(map);
+
+
+			// get color depending on population count value
+			function getColor(d) {
+				return d > 1000 ? '#800026' :
+						d > 800  ? '#BD0026' :
+						d > 500  ? '#E31A1C' :
+						d > 300  ? '#FC4E2A' :
+						d > 50   ? '#FD8D3C' :
+						d > 20   ? '#FEB24C' :
+						d > 10   ? '#FED976' :
+									'#FFEDA0';
+			}
+
+			// set the style for each shape in the map
+			function style(feature) {
+				return {
+					weight: 2,
+					opacity: 1,
+					color: 'white',
+					dashArray: '3',
+					fillOpacity: 0.7,
+					fillColor: getColor(feature.properties.count)
+				};
+			}
+
+			// set the style when hovering over the shape
+			function highlightFeature(e) {
+				var layer = e.target;
+
+				layer.setStyle({
+					weight: 5,
+					color: '#666',
+					dashArray: '',
+					fillOpacity: 0.7
+				});
+
+				if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+					layer.bringToFront();
+				}
+
+				info.update(layer.feature.properties);
+			}
+
+			// reset the style when leave the shape
+			function resetHighlight(e) {
+				geojson.resetStyle(e.target);
+				info.update();
+			}
+
+			// zoom in the map on the selected shape
+			function zoomToFeature(e) {
+				map.fitBounds(e.target.getBounds());
+			}
+
+			// register events for each shape
+			function onEachFeature(feature, layer) {
+				layer.on({
+					mouseover: highlightFeature,
+					mouseout: resetHighlight,
+					click: zoomToFeature
+				});
+			}
+
+			// create the legend
+			var legend = L.control({position: 'bottomright'});
+
+			legend.onAdd = function (map) {
+
+				var div = L.DomUtil.create('div', 'info legend'),
+					grades = [0, 10, 20, 50, 300, 500, 800, 1000],
+					labels = [],
+					from, to;
+
+				for (i = 0; i < grades.length; i++) {
+					from = grades[i];
+					to = grades[i + 1];
+
+					labels.push(
+						'<i style="background:' + getColor(from + 1) + '"></i> ' +
+						from + (to ? '&ndash;' + to : '+'));
+				}
+
+				div.innerHTML = labels.join('<br>');
+				return div;
+			};
+			legend.addTo(map);
+
+			// load the shapes and data into the map
+			load_map_data();
+
+		</script>
+	</body>
+</html>
