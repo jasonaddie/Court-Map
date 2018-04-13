@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0053)http://leafletjs.com/examples/choropleth/example.html -->
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -108,7 +107,7 @@
 					case_types, // list of case types that are available in the current data
 					year, // the currently selected year
 					years, // list of years that are available in the current data
-					urlParams, // store querystring values - used to determine what default values are when page loads
+					urlParams = {}, // store querystring values - used to determine what default values are when page loads
 					filter_html, // use to build the filter button html
 					tmp_case_type, // temporarly store a case type object
 					active, // used when setting class for button to indicate that it is active
@@ -118,11 +117,41 @@
 			// URL update functions
 			//////////////////////////
 
+			// get the current url querystring parameters
+			// values are saved into urlParams
+			function get_url_params(){
+		    var match,
+		        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+		        search = /([^&=]+)=?([^&]*)/g,
+		        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+		        query  = window.location.search.substring(1);
+
+		    urlParams = {};
+		    while (match = search.exec(query))
+		       urlParams[decode(match[1])] = decode(match[2]);
+
+			  console.log(urlParams);
+			}
+
 			// if the back or forward button is clicked,
 			// reload the map with the correct values
 			window.addEventListener('popstate', function(event) {
 				// TODO - reload the map with the proper values
 			  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+
+			  // record the new querystring values
+			  // - these will be used next to initialize the data and buttons
+			  get_url_params();
+
+				// initialize the current selections, data, and buttons
+				initialize_data_and_buttons();
+
+				// load the shapes and data into the map
+				load_map_data();
+
+				// update the page title
+				update_page_title();
+
 			});
 
 			// update the url so it has querystring values
@@ -307,6 +336,121 @@
 
 
 			//////////////////////////
+			// function to set the intial values, data, and buttons
+			//////////////////////////
+			function initialize_data_and_buttons(){
+				//////////////////////////
+				// if there are values from the querystring
+				// use them as the default values for the buttons
+				// that should be selected
+				//////////////////////////
+				// TODO: check that the values are valid
+				if (urlParams['court_type']){
+					court_type_id = urlParams['court_type'];
+				}
+				if (urlParams['case_type']){
+					case_type_id = urlParams['case_type'];
+				}
+				if (urlParams['year']){
+					year = urlParams['year'];
+				}
+
+				//////////////////////////
+				// get the data we
+				// should be working with
+				//////////////////////////
+
+				// get the case type
+				court_type = data_court_types.find(function(item){
+					return item.id == court_type_id;
+				});
+
+				// get a reference to the data that is to be processed
+				data = eval(court_type.data_variable);
+
+
+				//////////////////////////
+				// if there are any default values that do not exist,
+				// set them using values from the data
+				//////////////////////////
+
+				// if year is not already defined by a default value, get the most recent year in the data
+				// the years are automatically sorted so have to use the last key to ge the most recent year
+				if (year == undefined){
+					year = Object.keys(data).slice(-1)[0];
+				}
+
+				// if case type is not already defined by a default value, get the first case type in the data
+				if (case_type_id == undefined){
+					// look at the first data item for the year,
+					// then look at the 3rd item to get the first case type listed
+					case_type_id = Object.keys(data[year][0])[2];
+				}
+				case_type = data_case_types.find(function(item){
+					return item.id == case_type_id;
+				});
+
+
+				//////////////////////////
+				// build the filter buttons for each filter
+				//////////////////////////
+
+				// first clear out any buttons that might exist
+				document.getElementById('filter-court-type').innerHTML = '';
+				document.getElementById('filter-case-type').innerHTML = '';
+				document.getElementById('filter-year').innerHTML = '';
+
+
+				// function to create the filter button html
+				function build_button(button_type, active, id, text, fn){
+					return '<button class="' + button_type + ' ' + active + '" data-id="' + id + '" onclick="' + fn + '(this)">' + text + '</button>';
+				}
+
+				// court types
+				filter_html = '';
+				for(i=0; i<data_court_types.length; i++){
+					// determine if this button needs to be highlighted to show that it is currently active
+					active = court_type_id == data_court_types[i].id ? 'active' : '' ;
+					// build the button
+					filter_html += build_button('court_type', active, data_court_types[i].id, data_court_types[i].name, 'update_court_type');
+				}
+				document.getElementById('filter-court-type').innerHTML = filter_html;
+
+				// years
+				// - have to get list of possible years from the data
+				years = Object.keys(data).reverse(); // using reverse because the years get sorted and we want the most recent first
+				filter_html = '';
+				for(i=0; i<years.length; i++){
+					// determine if this button needs to be highlighted to show that it is currently active
+					active = year == years[i] ? 'active' : '' ;
+					// build the button
+					filter_html += build_button('year', active, years[i], years[i], 'update_year');
+				}
+				document.getElementById('filter-year').innerHTML = filter_html;
+
+				// case types
+				// - have to get list of possible case types from the data
+				case_types = Object.keys(data[year][0])
+				// remove the id and name keys since they are not case types
+				case_types.splice(0,2);
+				filter_html = '';
+				for(i=0; i<case_types.length; i++){
+					// get a reference to the case type object so we can get the id and name
+					tmp_case_type = data_case_types.find(function(item){
+						return item.id == case_types[i];
+					});
+
+					// determine if this button needs to be highlighted to show that it is currently active
+					active = case_type_id == data_case_types[i].id ? 'active' : '' ;
+					// build the button
+					filter_html += build_button('case_type', active, tmp_case_type.id, tmp_case_type.name, 'update_case_type');
+				}
+				document.getElementById('filter-case-type').innerHTML = filter_html;
+			}
+
+
+
+			//////////////////////////
 			//////////////////////////
 			//////////////////////////
 			// THE FOLLOWING CODE AUTOMATICALLY
@@ -315,123 +459,11 @@
 			//////////////////////////
 			//////////////////////////
 
+			// get the url querystring parameters, if they exist
+			get_url_params();
 
-			// get the querystring values from the url, if there are any
-			// the values are stored in urlParams
-			(window.onpopstate = function () {
-			    var match,
-			        pl     = /\+/g,  // Regex for replacing addition symbol with a space
-			        search = /([^&=]+)=?([^&]*)/g,
-			        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-			        query  = window.location.search.substring(1);
-
-			    urlParams = {};
-			    while (match = search.exec(query))
-			       urlParams[decode(match[1])] = decode(match[2]);
-			})();
-
-			//////////////////////////
-			// if there are values from the querystring
-			// use them as the default values for the buttons
-			// that should be selected
-			//////////////////////////
-			// TODO: check that the values are valid
-			if (urlParams['court_type']){
-				court_type_id = urlParams['court_type'];
-			}
-			if (urlParams['case_type']){
-				case_type_id = urlParams['case_type'];
-			}
-			if (urlParams['year']){
-				year = urlParams['year'];
-			}
-
-			//////////////////////////
-			// get the data we
-			// should be working with
-			//////////////////////////
-
-			// get the case type
-			court_type = data_court_types.find(function(item){
-				return item.id == court_type_id;
-			});
-
-			// get a reference to the data that is to be processed
-			data = eval(court_type.data_variable);
-
-
-			//////////////////////////
-			// if there are any default values that do not exist,
-			// set them using values from the data
-			//////////////////////////
-
-			// if year is not already defined by a default value, get the most recent year in the data
-			// the years are automatically sorted so have to use the last key to ge the most recent year
-			if (year == undefined){
-				year = Object.keys(data).slice(-1)[0];
-			}
-
-			// if case type is not already defined by a default value, get the first case type in the data
-			if (case_type_id == undefined){
-				// look at the first data item for the year,
-				// then look at the 3rd item to get the first case type listed
-				case_type_id = Object.keys(data[year][0])[2];
-			}
-			case_type = data_case_types.find(function(item){
-				return item.id == case_type_id;
-			});
-
-
-			//////////////////////////
-			// build the filter buttons for each filter
-			//////////////////////////
-
-			// function to create the filter button html
-			function build_button(button_type, active, id, text, fn){
-				return '<button class="' + button_type + ' ' + active + '" data-id="' + id + '" onclick="' + fn + '(this)">' + text + '</button>';
-			}
-
-			// court types
-			filter_html = '';
-			for(i=0; i<data_court_types.length; i++){
-				// determine if this button needs to be highlighted to show that it is currently active
-				active = court_type_id == data_court_types[i].id ? 'active' : '' ;
-				// build the button
-				filter_html += build_button('court_type', active, data_court_types[i].id, data_court_types[i].name, 'update_court_type');
-			}
-			document.getElementById('filter-court-type').innerHTML = filter_html;
-
-			// years
-			// - have to get list of possible years from the data
-			years = Object.keys(data).reverse(); // using reverse because the years get sorted and we want the most recent first
-			filter_html = '';
-			for(i=0; i<years.length; i++){
-				// determine if this button needs to be highlighted to show that it is currently active
-				active = year == years[i] ? 'active' : '' ;
-				// build the button
-				filter_html += build_button('year', active, years[i], years[i], 'update_year');
-			}
-			document.getElementById('filter-year').innerHTML = filter_html;
-
-			// case types
-			// - have to get list of possible case types from the data
-			case_types = Object.keys(data[year][0])
-			// remove the id and name keys since they are not case types
-			case_types.splice(0,2);
-			filter_html = '';
-			for(i=0; i<case_types.length; i++){
-				// get a reference to the case type object so we can get the id and name
-				tmp_case_type = data_case_types.find(function(item){
-					return item.id == case_types[i];
-				});
-
-				// determine if this button needs to be highlighted to show that it is currently active
-				active = case_type_id == data_case_types[i].id ? 'active' : '' ;
-				// build the button
-				filter_html += build_button('case_type', active, tmp_case_type.id, tmp_case_type.name, 'update_case_type');
-			}
-			document.getElementById('filter-case-type').innerHTML = filter_html;
-
+			// initialize the current selections, data, and buttons
+			initialize_data_and_buttons();
 
 			//////////////////////////
 			//////////////////////////
