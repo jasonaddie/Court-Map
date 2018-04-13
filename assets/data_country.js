@@ -2,7 +2,7 @@ var data_country = {
    "2017": [
     {
       "id": 1,
-      "name": "Kyrgyzstan",
+      "name": "Кыргызстан",
       "criminal": 640,
       "administrative": 330
     }
@@ -10,7 +10,7 @@ var data_country = {
    "2016": [
     {
       "id": 1,
-      "name": "Kyrgyzstan",
+      "name": "Кыргызстан",
       "criminal": 640,
       "administrative": 330
     }
@@ -18,7 +18,7 @@ var data_country = {
    "2015": [
     {
       "id": 1,
-      "name": "Kyrgyzstan",
+      "name": "Кыргызстан",
       "criminal": 310,
       "administrative": 570
     }

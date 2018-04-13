@@ -2,265 +2,265 @@ var data_districts = {
    "2017": [
     {
       "id": 1,
-      "name": "Batken",
+      "name": "Баткенский район",
       "criminal": 640,
       "administrative": 330
     },
     {
       "id": 2,
-      "name": "Kadamjai",
+      "name": "Кадамжайский район",
       "criminal": 2193,
       "administrative": 1809
     },
     {
       "id": 3,
-      "name": "Lailak",
+      "name": "Лейлекский район",
       "criminal": 1039,
       "administrative": 940
     },
     {
       "id": 4,
-      "name": "Biškek",
+      "name": "г. Бишкек",
       "criminal": 437,
       "administrative": 790
     },
     {
       "id": 5,
-      "name": "Alamüdün",
+      "name": "Аламединский район",
       "criminal": 583,
       "administrative": 159
     },
     {
       "id": 6,
-      "name": "Chui",
+      "name": "Чуйский район",
       "criminal": 1061,
       "administrative": 1100
     },
     {
       "id": 7,
-      "name": "Jaiyl",
+      "name": "Жайыльский район",
       "criminal": 745,
       "administrative": 340
     },
     {
       "id": 8,
-      "name": "Kemin",
+      "name": "Кеминский район",
       "criminal": 120,
       "administrative": 340
     },
     {
       "id": 9,
-      "name": "Moskovsky",
+      "name": "Московский район",
       "criminal": 347,
       "administrative": 560
     },
     {
       "id": 10,
-      "name": "Panfilov",
+      "name": "Панфиловский район",
       "criminal": 640,
       "administrative": 330
     },
     {
       "id": 11,
-      "name": "Sokuluk",
+      "name": "Сокулукский район",
       "criminal": 2193,
       "administrative": 1809
     },
     {
       "id": 12,
-      "name": "Ysyk-Ata",
+      "name": "Ысык-Атинский район",
       "criminal": 1039,
       "administrative": 940
     },
     {
       "id": 13,
-      "name": "Aksyi",
+      "name": "Аксыйский район",
       "criminal": 437,
       "administrative": 790
     },
     {
       "id": 14,
-      "name": "Ala-Buka",
+      "name": "Ала-Букинский район",
       "criminal": 583,
       "administrative": 159
     },
     {
       "id": 15,
-      "name": "Bazar-Korgon",
+      "name": "Базар-Коргонский район",
       "criminal": 1061,
       "administrative": 1100
     },
     {
       "id": 16,
-      "name": "Chatkal",
+      "name": "Чаткальский район",
       "criminal": 745,
       "administrative": 340
     },
     {
       "id": 17,
-      "name": "Nooken",
+      "name": "Ноокенский район",
       "criminal": 120,
       "administrative": 340
     },
     {
       "id": 18,
-      "name": "Suzak",
+      "name": "Сузакский район",
       "criminal": 347,
       "administrative": 560
     },
     {
       "id": 19,
-      "name": "Togus-Toro",
+      "name": "Тогуз-Тороуский район",
       "criminal": 640,
       "administrative": 330
     },
     {
       "id": 20,
-      "name": "Toktogul",
+      "name": "Токтогульский район",
       "criminal": 2193,
       "administrative": 1809
     },
     {
       "id": 21,
-      "name": "Ak-Talaa",
+      "name": "Ак-Талинский район",
       "criminal": 1039,
       "administrative": 940
     },
     {
       "id": 22,
-      "name": "At-Bashi",
+      "name": "Ат-Башинский район",
       "criminal": 437,
       "administrative": 790
     },
     {
       "id": 23,
-      "name": "Jumgal",
+      "name": "Жумгальский район",
       "criminal": 583,
       "administrative": 159
     },
     {
       "id": 24,
-      "name": "Kochkor",
+      "name": "Кочкорский район",
       "criminal": 1061,
       "administrative": 1100
     },
     {
       "id": 25,
-      "name": "Naryn",
+      "name": "Нарынский район",
       "criminal": 745,
       "administrative": 340
     },
     {
       "id": 26,
-      "name": "Song-Kol",
+      "name": "оз. Сон-Куль",
       "criminal": 120,
       "administrative": 340
     },
     {
       "id": 27,
-      "name": "Osh",
+      "name": "г. Ош",
       "criminal": 347,
       "administrative": 560
     },
     {
       "id": 28,
-      "name": "Alai",
+      "name": "Алайский район",
       "criminal": 640,
       "administrative": 330
     },
     {
       "id": 29,
-      "name": "Aravan",
+      "name": "Араванский район",
       "criminal": 2193,
       "administrative": 1809
     },
     {
       "id": 30,
-      "name": "Chong-Alay",
+      "name": "Чон-Алайский район",
       "criminal": 1039,
       "administrative": 940
     },
     {
       "id": 31,
-      "name": "Kara-Kuldja",
+      "name": "Кара-Кулджинский район",
       "criminal": 437,
       "administrative": 790
     },
     {
       "id": 32,
-      "name": "Kara-Suu",
+      "name": "Кара-Суйский район",
       "criminal": 583,
       "administrative": 159
     },
     {
       "id": 33,
-      "name": "Nookat",
+      "name": "Ноокатский район",
       "criminal": 1061,
       "administrative": 1100
     },
     {
       "id": 34,
-      "name": "Uzgen",
+      "name": "Узгенский район",
       "criminal": 745,
       "administrative": 340
     },
     {
       "id": 35,
-      "name": "Bakai-Ata",
+      "name": "Бакай-Атинский район",
       "criminal": 120,
       "administrative": 340
     },
     {
       "id": 36,
-      "name": "Kara-Buura",
+      "name": "Кара-Бууринский район",
       "criminal": 347,
       "administrative": 560
     },
     {
       "id": 37,
-      "name": "Manas",
+      "name": "Манасский район",
       "criminal": 640,
       "administrative": 330
     },
     {
       "id": 38,
-      "name": "Talas",
+      "name": "Таласский район",
       "criminal": 2193,
       "administrative": 1809
     },
     {
       "id": 39,
-      "name": "Ak-Suu",
+      "name": "Ак-Суйский район",
       "criminal": 1039,
       "administrative": 940
     },
     {
       "id": 40,
-      "name": "Djety-Oguz",
+      "name": "Джети-Огузский район",
       "criminal": 437,
       "administrative": 790
     },
     {
       "id": 41,
-      "name": "Tüp",
+      "name": "Тюпский район",
       "criminal": 583,
       "administrative": 159
     },
     {
       "id": 42,
-      "name": "Ton",
+      "name": "Тонский район",
       "criminal": 1061,
       "administrative": 1100
     },
     {
       "id": 43,
-      "name": "Ysyk-Köl (lake)",
+      "name": "оз. Иссык-Куль",
       "criminal": 745,
       "administrative": 340
     },
     {
       "id": 44,
-      "name": "Ysyk-Köl",
+      "name": "Иссык-Кульский район",
       "criminal": 120,
       "administrative": 340
     }
@@ -268,265 +268,265 @@ var data_districts = {
    "2016": [
     {
       "id": 1,
-      "name": "Batken",
+      "name": "Баткенский район",
       "criminal": 330,
       "administrative": 640
     },
     {
       "id": 2,
-      "name": "Kadamjai",
+      "name": "Кадамжайский район",
       "criminal": 1809,
       "administrative": 2193
     },
     {
       "id": 3,
-      "name": "Lailak",
+      "name": "Лейлекский район",
       "criminal": 940,
       "administrative": 1039
     },
     {
       "id": 4,
-      "name": "Biškek",
+      "name": "г. Бишкек",
       "criminal": 790,
       "administrative": 437
     },
     {
       "id": 5,
-      "name": "Alamüdün",
+      "name": "Аламединский район",
       "criminal": 159,
       "administrative": 583
     },
     {
       "id": 6,
-      "name": "Chui",
+      "name": "Чуйский район",
       "criminal": 1100,
       "administrative": 1061
     },
     {
       "id": 7,
-      "name": "Jaiyl",
+      "name": "Жайыльский район",
       "criminal": 340,
       "administrative": 745
     },
     {
       "id": 8,
-      "name": "Kemin",
+      "name": "Кеминский район",
       "criminal": 340,
       "administrative": 120
     },
     {
       "id": 9,
-      "name": "Moskovsky",
+      "name": "Московский район",
       "criminal": 560,
       "administrative": 347
     },
     {
       "id": 10,
-      "name": "Panfilov",
+      "name": "Панфиловский район",
       "criminal": 330,
       "administrative": 640
     },
     {
       "id": 11,
-      "name": "Sokuluk",
+      "name": "Сокулукский район",
       "criminal": 1809,
       "administrative": 2193
     },
     {
       "id": 12,
-      "name": "Ysyk-Ata",
+      "name": "Ысык-Атинский район",
       "criminal": 940,
       "administrative": 1039
     },
     {
       "id": 13,
-      "name": "Aksyi",
+      "name": "Аксыйский район",
       "criminal": 790,
       "administrative": 437
     },
     {
       "id": 14,
-      "name": "Ala-Buka",
+      "name": "Ала-Букинский район",
       "criminal": 159,
       "administrative": 583
     },
     {
       "id": 15,
-      "name": "Bazar-Korgon",
+      "name": "Базар-Коргонский район",
       "criminal": 1100,
       "administrative": 1061
     },
     {
       "id": 16,
-      "name": "Chatkal",
+      "name": "Чаткальский район",
       "criminal": 340,
       "administrative": 745
     },
     {
       "id": 17,
-      "name": "Nooken",
+      "name": "Ноокенский район",
       "criminal": 340,
       "administrative": 120
     },
     {
       "id": 18,
-      "name": "Suzak",
+      "name": "Сузакский район",
       "criminal": 560,
       "administrative": 347
     },
     {
       "id": 19,
-      "name": "Togus-Toro",
+      "name": "Тогуз-Тороуский район",
       "criminal": 330,
       "administrative": 640
     },
     {
       "id": 20,
-      "name": "Toktogul",
+      "name": "Токтогульский район",
       "criminal": 1809,
       "administrative": 2193
     },
     {
       "id": 21,
-      "name": "Ak-Talaa",
+      "name": "Ак-Талинский район",
       "criminal": 940,
       "administrative": 1039
     },
     {
       "id": 22,
-      "name": "At-Bashi",
+      "name": "Ат-Башинский район",
       "criminal": 790,
       "administrative": 437
     },
     {
       "id": 23,
-      "name": "Jumgal",
+      "name": "Жумгальский район",
       "criminal": 159,
       "administrative": 583
     },
     {
       "id": 24,
-      "name": "Kochkor",
+      "name": "Кочкорский район",
       "criminal": 1100,
       "administrative": 1061
     },
     {
       "id": 25,
-      "name": "Naryn",
+      "name": "Нарынский район",
       "criminal": 340,
       "administrative": 745
     },
     {
       "id": 26,
-      "name": "Song-Kol",
+      "name": "оз. Сон-Куль",
       "criminal": 340,
       "administrative": 120
     },
     {
       "id": 27,
-      "name": "Osh",
+      "name": "г. Ош",
       "criminal": 560,
       "administrative": 347
     },
     {
       "id": 28,
-      "name": "Alai",
+      "name": "Алайский район",
       "criminal": 330,
       "administrative": 640
     },
     {
       "id": 29,
-      "name": "Aravan",
+      "name": "Араванский район",
       "criminal": 1809,
       "administrative": 2193
     },
     {
       "id": 30,
-      "name": "Chong-Alay",
+      "name": "Чон-Алайский район",
       "criminal": 940,
       "administrative": 1039
     },
     {
       "id": 31,
-      "name": "Kara-Kuldja",
+      "name": "Кара-Кулджинский район",
       "criminal": 790,
       "administrative": 437
     },
     {
       "id": 32,
-      "name": "Kara-Suu",
+      "name": "Кара-Суйский район",
       "criminal": 159,
       "administrative": 583
     },
     {
       "id": 33,
-      "name": "Nookat",
+      "name": "Ноокатский район",
       "criminal": 1100,
       "administrative": 1061
     },
     {
       "id": 34,
-      "name": "Uzgen",
+      "name": "Узгенский район",
       "criminal": 340,
       "administrative": 745
     },
     {
       "id": 35,
-      "name": "Bakai-Ata",
+      "name": "Бакай-Атинский район",
       "criminal": 340,
       "administrative": 120
     },
     {
       "id": 36,
-      "name": "Kara-Buura",
+      "name": "Кара-Бууринский район",
       "criminal": 560,
       "administrative": 347
     },
     {
       "id": 37,
-      "name": "Manas",
+      "name": "Манасский район",
       "criminal": 330,
       "administrative": 640
     },
     {
       "id": 38,
-      "name": "Talas",
+      "name": "Таласский район",
       "criminal": 1809,
       "administrative": 2193
     },
     {
       "id": 39,
-      "name": "Ak-Suu",
+      "name": "Ак-Суйский район",
       "criminal": 940,
       "administrative": 1039
     },
     {
       "id": 40,
-      "name": "Djety-Oguz",
+      "name": "Джети-Огузский район",
       "criminal": 790,
       "administrative": 437
     },
     {
       "id": 41,
-      "name": "Tüp",
+      "name": "Тюпский район",
       "criminal": 159,
       "administrative": 583
     },
     {
       "id": 42,
-      "name": "Ton",
+      "name": "Тонский район",
       "criminal": 1100,
       "administrative": 1061
     },
     {
       "id": 43,
-      "name": "Ysyk-Köl (lake)",
+      "name": "оз. Иссык-Куль",
       "criminal": 340,
       "administrative": 745
     },
     {
       "id": 44,
-      "name": "Ysyk-Köl",
+      "name": "Иссык-Кульский район",
       "criminal": 340,
       "administrative": 120
     }
@@ -534,265 +534,265 @@ var data_districts = {
    "2015": [
     {
       "id": 1,
-      "name": "Batken",
+      "name": "Баткенский район",
       "criminal": 310,
       "administrative": 570
     },
     {
       "id": 2,
-      "name": "Kadamjai",
+      "name": "Кадамжайский район",
       "criminal": 384,
       "administrative": 718
     },
     {
       "id": 3,
-      "name": "Lailak",
+      "name": "Лейлекский район",
       "criminal": 99,
       "administrative": 148
     },
     {
       "id": 4,
-      "name": "Biškek",
+      "name": "г. Бишкек",
       "criminal": 353,
       "administrative": 656
     },
     {
       "id": 5,
-      "name": "Alamüdün",
+      "name": "Аламединский район",
       "criminal": 424,
       "administrative": 798
     },
     {
       "id": 6,
-      "name": "Chui",
+      "name": "Чуйский район",
       "criminal": 39,
       "administrative": 28
     },
     {
       "id": 7,
-      "name": "Jaiyl",
+      "name": "Жайыльский район",
       "criminal": 405,
       "administrative": 760
     },
     {
       "id": 8,
-      "name": "Kemin",
+      "name": "Кеминский район",
       "criminal": 220,
       "administrative": 390
     },
     {
       "id": 9,
-      "name": "Moskovsky",
+      "name": "Московский район",
       "criminal": 213,
       "administrative": 376
     },
     {
       "id": 10,
-      "name": "Panfilov",
+      "name": "Панфиловский район",
       "criminal": 310,
       "administrative": 570
     },
     {
       "id": 11,
-      "name": "Sokuluk",
+      "name": "Сокулукский район",
       "criminal": 384,
       "administrative": 718
     },
     {
       "id": 12,
-      "name": "Ysyk-Ata",
+      "name": "Ысык-Атинский район",
       "criminal": 99,
       "administrative": 148
     },
     {
       "id": 13,
-      "name": "Aksyi",
+      "name": "Аксыйский район",
       "criminal": 353,
       "administrative": 656
     },
     {
       "id": 14,
-      "name": "Ala-Buka",
+      "name": "Ала-Букинский район",
       "criminal": 424,
       "administrative": 798
     },
     {
       "id": 15,
-      "name": "Bazar-Korgon",
+      "name": "Базар-Коргонский район",
       "criminal": 39,
       "administrative": 28
     },
     {
       "id": 16,
-      "name": "Chatkal",
+      "name": "Чаткальский район",
       "criminal": 405,
       "administrative": 760
     },
     {
       "id": 17,
-      "name": "Nooken",
+      "name": "Ноокенский район",
       "criminal": 220,
       "administrative": 390
     },
     {
       "id": 18,
-      "name": "Suzak",
+      "name": "Сузакский район",
       "criminal": 213,
       "administrative": 376
     },
     {
       "id": 19,
-      "name": "Togus-Toro",
+      "name": "Тогуз-Тороуский район",
       "criminal": 310,
       "administrative": 570
     },
     {
       "id": 20,
-      "name": "Toktogul",
+      "name": "Токтогульский район",
       "criminal": 384,
       "administrative": 718
     },
     {
       "id": 21,
-      "name": "Ak-Talaa",
+      "name": "Ак-Талинский район",
       "criminal": 99,
       "administrative": 148
     },
     {
       "id": 22,
-      "name": "At-Bashi",
+      "name": "Ат-Башинский район",
       "criminal": 353,
       "administrative": 656
     },
     {
       "id": 23,
-      "name": "Jumgal",
+      "name": "Жумгальский район",
       "criminal": 424,
       "administrative": 798
     },
     {
       "id": 24,
-      "name": "Kochkor",
+      "name": "Кочкорский район",
       "criminal": 39,
       "administrative": 28
     },
     {
       "id": 25,
-      "name": "Naryn",
+      "name": "Нарынский район",
       "criminal": 405,
       "administrative": 760
     },
     {
       "id": 26,
-      "name": "Song-Kol",
+      "name": "оз. Сон-Куль",
       "criminal": 220,
       "administrative": 390
     },
     {
       "id": 27,
-      "name": "Osh",
+      "name": "г. Ош",
       "criminal": 213,
       "administrative": 376
     },
     {
       "id": 28,
-      "name": "Alai",
+      "name": "Алайский район",
       "criminal": 310,
       "administrative": 570
     },
     {
       "id": 29,
-      "name": "Aravan",
+      "name": "Араванский район",
       "criminal": 384,
       "administrative": 718
     },
     {
       "id": 30,
-      "name": "Chong-Alay",
+      "name": "Чон-Алайский район",
       "criminal": 99,
       "administrative": 148
     },
     {
       "id": 31,
-      "name": "Kara-Kuldja",
+      "name": "Кара-Кулджинский район",
       "criminal": 353,
       "administrative": 656
     },
     {
       "id": 32,
-      "name": "Kara-Suu",
+      "name": "Кара-Суйский район",
       "criminal": 424,
       "administrative": 798
     },
     {
       "id": 33,
-      "name": "Nookat",
+      "name": "Ноокатский район",
       "criminal": 39,
       "administrative": 28
     },
     {
       "id": 34,
-      "name": "Uzgen",
+      "name": "Узгенский район",
       "criminal": 405,
       "administrative": 760
     },
     {
       "id": 35,
-      "name": "Bakai-Ata",
+      "name": "Бакай-Атинский район",
       "criminal": 220,
       "administrative": 390
     },
     {
       "id": 36,
-      "name": "Kara-Buura",
+      "name": "Кара-Бууринский район",
       "criminal": 213,
       "administrative": 376
     },
     {
       "id": 37,
-      "name": "Manas",
+      "name": "Манасский район",
       "criminal": 310,
       "administrative": 570
     },
     {
       "id": 38,
-      "name": "Talas",
+      "name": "Таласский район",
       "criminal": 384,
       "administrative": 718
     },
     {
       "id": 39,
-      "name": "Ak-Suu",
+      "name": "Ак-Суйский район",
       "criminal": 99,
       "administrative": 148
     },
     {
       "id": 40,
-      "name": "Djety-Oguz",
+      "name": "Джети-Огузский район",
       "criminal": 353,
       "administrative": 656
     },
     {
       "id": 41,
-      "name": "Tüp",
+      "name": "Тюпский район",
       "criminal": 424,
       "administrative": 798
     },
     {
       "id": 42,
-      "name": "Ton",
+      "name": "Тонский район",
       "criminal": 39,
       "administrative": 28
     },
     {
       "id": 43,
-      "name": "Ysyk-Köl (lake)",
+      "name": "оз. Иссык-Куль",
       "criminal": 405,
       "administrative": 760
     },
     {
       "id": 44,
-      "name": "Ysyk-Köl",
+      "name": "Иссык-Кульский район",
       "criminal": 220,
       "administrative": 390
     }
