@@ -158,9 +158,22 @@
 				}
 
 				// update the url
-				window.history.pushState(params, null, url);
+				window.history.pushState(params, create_page_title(), url);
 			}
 
+			//////////////////////////
+			// manage the page title
+			//////////////////////////
+
+			// create the text for the title
+			function create_page_title(){
+				return year + ' ' + court_type.name + ' Courts: ' + case_type.name + ' Cases';
+			}
+
+			// update the page title
+			function update_page_title(){
+				document.title = create_page_title() + ' | Courts Map';
+			}
 
 
 			//////////////////////////
@@ -257,6 +270,9 @@
 				// update the map with the correct shapes and data
 				load_map_data();
 
+				// update the page title
+				update_page_title();
+
 				// update the url with the parameter values
 				update_url();
 			}
@@ -319,7 +335,7 @@
 			// use them as the default values for the buttons
 			// that should be selected
 			//////////////////////////
-		// TODO: check that the values are valid
+			// TODO: check that the values are valid
 			if (urlParams['court_type']){
 				court_type_id = urlParams['court_type'];
 			}
@@ -443,7 +459,7 @@
 			};
 
 			info.update = function (props) {
-				this._div.innerHTML = '<h4>' + year + ' ' + court_type.name + ' Courts: ' + case_type.name + ' Cases</h4>' +
+				this._div.innerHTML = '<h4>' + create_page_title() + '</h4>' +
 					(props ? '<b>' + props.name + '</b>: ' + props.count : 'Hover over a region');
 			};
 			info.addTo(map);
@@ -535,8 +551,15 @@
 			};
 			legend.addTo(map);
 
+
 			// load the shapes and data into the map
 			load_map_data();
+
+			// update the page title
+			update_page_title();
+
+			// update the url with the parameter values
+			update_url();
 
 		</script>
 	</body>
