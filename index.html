@@ -109,6 +109,7 @@
 					years, // list of years that are available in the current data
 					urlParams = {}, // store querystring values - used to determine what default values are when page loads
 					filter_html, // use to build the filter button html
+					tmp_court_type, // temporarly store a court type object
 					tmp_case_type, // temporarly store a case type object
 					active, // used when setting class for button to indicate that it is active
 					buttons; // used when updating the state of the buttons
@@ -136,9 +137,6 @@
 			// if the back or forward button is clicked,
 			// reload the map with the correct values
 			window.addEventListener('popstate', function(event) {
-				// TODO - reload the map with the proper values
-			  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
-
 			  // record the new querystring values
 			  // - these will be used next to initialize the data and buttons
 			  get_url_params();
@@ -344,13 +342,36 @@
 				// use them as the default values for the buttons
 				// that should be selected
 				//////////////////////////
-				// TODO: check that the values are valid
 				if (urlParams['court_type']){
-					court_type_id = urlParams['court_type'];
+					tmp_court_type = null;
+					tmp_court_type = data_court_types.find(function(item){
+						return item.id == urlParams['court_type'];
+					});
+
+					// if the court type was found, save the id
+					if (tmp_court_type){
+						court_type_id = tmp_court_type.id;
+					}
+
+					// if the court type was not found, default to region
+					if (court_type_id == undefined){
+						court_type_id = 'region';
+					}
 				}
+
 				if (urlParams['case_type']){
-					case_type_id = urlParams['case_type'];
+					tmp_case_type = null;
+					tmp_case_type = data_case_types.find(function(item){
+						return item.id == urlParams['case_type'];
+					});
+
+					// if the case type was found, save the id
+					if (tmp_case_type){
+						case_type_id = tmp_case_type.id;
+					}
+
 				}
+
 				if (urlParams['year']){
 					year = urlParams['year'];
 				}
@@ -372,16 +393,20 @@
 				//////////////////////////
 				// if there are any default values that do not exist,
 				// set them using values from the data
+				// this also includes testing default values that were
+				// provided in the url to make sure they exist
 				//////////////////////////
 
-				// if year is not already defined by a default value, get the most recent year in the data
+				// if the year is defined, make sure it is in the data
+				// else if year is not already defined by a default value, get the most recent year in the data
 				// the years are automatically sorted so have to use the last key to ge the most recent year
-				if (year == undefined){
+				if ((year && data[year] == undefined) || year == undefined){
 					year = Object.keys(data).slice(-1)[0];
 				}
 
-				// if case type is not already defined by a default value, get the first case type in the data
-				if (case_type_id == undefined){
+				// if case type is defined, make sure it is in the data
+				// else if case type is not already defined by a default value, get the first case type in the data
+				if ((case_type_id && !Object.keys(data[year][0]).includes(case_type_id)) || case_type_id == undefined){
 					// look at the first data item for the year,
 					// then look at the 3rd item to get the first case type listed
 					case_type_id = Object.keys(data[year][0])[2];
