@@ -11,9 +11,10 @@
 
 		<style>
 			html, body {
-				font-family: 'courier new', helvetica, sans-serif;
+				font-family: 'Courier new', Helvetica, sans-serif;
 				height: 100%;
 				margin: 0;
+				padding: 5px;
 			}
 
 			#map {
@@ -45,9 +46,6 @@
 				opacity: 0.7;
 			}
 
-			#filters{
-				margin-left:  10px;
-			}
 			#filters div{
 				margin-bottom: 5px;
 			}
@@ -58,7 +56,7 @@
 			#filters button{
 				background-color: #eee;
 				color: black;
-				font-family: 'courier new', sans-serif;
+				font-family: 'Courier new', Helvetica, sans-serif;
 				padding: 4px 8px;
 				-moz-border-radius: 4px;
 				-webkit-border-radius: 4px;
@@ -73,16 +71,64 @@
 				background-color: gray;
 				color: white;
 			}
+
+			#table_container{
+				margin-top: 20px;
+			}
+			#table_title{
+				font-weight: bold;
+				font-size: larger;
+			}
+
+			.table {
+			  /* width: 100%; */
+				width: 1050px;
+			  max-width: 100%;
+			  margin-bottom: 1rem;
+			  background-color: transparent;
+			}
+			.table th,
+			.table td {
+			  padding: 0.75rem;
+			  vertical-align: top;
+			  border-top: 1px solid #dee2e6;
+			}
+			.table thead th {
+			  vertical-align: bottom;
+			  border-bottom: 2px solid #dee2e6;
+		    cursor: pointer;
+			}
+			.table tbody + tbody {
+			  border-top: 2px solid #dee2e6;
+			}
+			.table .table {
+			  background-color: white;
+			}
+
+			.table-striped tbody tr:nth-of-type(odd) {
+			  background-color: rgba(0, 0, 0, 0.05);
+			}
+
+			.table-hover tbody tr:hover {
+			  background-color: rgba(0, 0, 0, 0.075);
+			}
 		</style>
 	</head>
 	<body tcap-name="main">
 
-		<div id='map'></div>
 		<div id='filters'>
+			<div><b>Год:</b> <span id="filter-year"></span></div>
 			<div><b>Уровень судов:</b> <span id="filter-court-type"></span></div>
 			<div><b>Тип дел:</b> <span id="filter-case-type"></span></div>
-			<div><b>Год:</b> <span id="filter-year"></span></div>
 		</div>
+
+		<div id='map'></div>
+
+		<div id="table_container">
+			<div id="table_title"></div>
+			<div id="table"></div>
+		</div>
+
 
 		<!-- load the shapes -->
 		<script type="text/javascript" src="./assets/shapes_districts.js"></script>
@@ -101,6 +147,7 @@
 					data, // store the data that is currently being used
 					shapes, // store the shapes that is currently being used
 					i, // used in for loops as counter
+					j, // used in for loops as counter
 					data_item, // used when getting data to load into a shape
 					court_type_id = 'region', // the currently selected court type id
 					court_type, // the currently selected court type
@@ -110,11 +157,13 @@
 					year, // the currently selected year
 					years, // list of years that are available in the current data
 					urlParams = {}, // store querystring values - used to determine what default values are when page loads
-					filter_html, // use to build the filter button html
+					html, // use to build the filter button html
 					tmp_court_type, // temporarly store a court type object
 					tmp_case_type, // temporarly store a case type object
 					active, // used when setting class for button to indicate that it is active
-					buttons; // used when updating the state of the buttons
+					buttons, // used when updating the state of the buttons
+					row_data, // data used for table row
+					is_case_type_change = false;// indicates whether the data change is due to a case type button being pressed
 
 			//////////////////////////
 			// URL update functions
@@ -132,8 +181,6 @@
 		    urlParams = {};
 		    while (match = search.exec(query))
 		       urlParams[decode(match[1])] = decode(match[2]);
-
-			  console.log(urlParams);
 			}
 
 			// if the back or forward button is clicked,
@@ -148,6 +195,9 @@
 
 				// load the shapes and data into the map
 				load_map_data();
+
+				// update the table with the correct data
+				update_table();
 
 				// update the page title
 				update_page_title();
@@ -204,6 +254,22 @@
 				document.title = create_page_title() + ' | Courts Map';
 			}
 
+			// create the text for the title of the table
+			function create_table_title(){
+				return year + ' ' + court_type.name + ' Data';
+			}
+
+
+
+			//////////////////////////
+			// sort table functions
+			//////////////////////////
+
+			const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+			const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+			    v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+			    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
 
 			//////////////////////////
 			// button interaction functions
@@ -251,6 +317,53 @@
 				}).addTo(map);
 			}
 
+			// build the data table with the latest data
+			//TODO - be able to switch between comparing case types and comparing years
+			function update_table(){
+				html = '<table class="table table-striped table-hover"><thead><tr>';
+
+				// create table headers
+				// - case type
+				html += '<th>' + court_type.name + '</th>';
+				// - case types
+				for(i=0; i < data_case_types.length; i++){
+					html += '<th title="Click to sort">' + data_case_types[i].name + '</th>';
+				}
+				html += '</tr></thead><tbody>';
+
+				// add each row
+				for(i=0; i < data[year].length; i++){
+					row_data = data[year][i];
+					html += '<tr>';
+
+					// name
+					html += '<td>' + row_data.name + '</td>';
+
+					// case types
+					for(j=0; j < data_case_types.length; j++){
+						html += '<td>' + row_data[data_case_types[j].id] + '</td>';
+					}
+
+
+					html += '</tr>';
+				}
+
+				html += '</tbody></table>';
+
+				// add the table to the page
+				document.getElementById('table').innerHTML = html;
+
+				// update table title
+				document.getElementById('table_title').innerHTML = create_table_title();
+
+				// enable table sorting
+				document.querySelectorAll('thead th').forEach(th => th.addEventListener('click', (() => {
+				    const tbody = th.closest('table').querySelector('tbody');
+				    Array.from(tbody.querySelectorAll('tr'))
+				        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+				        .forEach(tr => tbody.appendChild(tr) );
+				})));
+			}
 
 			// update the active status for a set of buttons
 			function update_button_status(buttons, button_make_active){
@@ -299,6 +412,13 @@
 				// update the map with the correct shapes and data
 				load_map_data();
 
+				// update the table with the correct data
+				//  - do not need to change the table if the
+				//    case type button was pressed
+				if (!is_case_type_change){
+					update_table();
+				}
+
 				// update the page title
 				update_page_title();
 
@@ -311,10 +431,23 @@
 			// when buttons are clicked
 			//////////////////////////
 
+			// year button was selected
+			// update the active state for these set of buttons
+			// update the map
+			function update_year(e){
+				// indicate that the change is NOT due to case type
+				is_case_type_change = false;
+
+				update_everything('button.year', e);
+			}
+
 			// court type button was selected
 			// update the active state for these set of buttons
 			// update the map
 			function update_court_type(e){
+				// indicate that the change is NOT due to case type
+				is_case_type_change = false;
+
 				update_everything('button.court_type', e);
 
 				// TODO - when court changes, update the case type and year button for they may be different
@@ -324,14 +457,10 @@
 			// update the active state for these set of buttons
 			// update the map
 			function update_case_type(e){
-				update_everything('button.case_type', e);
-			}
+				// indicate that the change is due to case type
+				is_case_type_change = true;
 
-			// year button was selected
-			// update the active state for these set of buttons
-			// update the map
-			function update_year(e){
-				update_everything('button.year', e);
+				update_everything('button.case_type', e);
 			}
 
 
@@ -434,33 +563,33 @@
 				}
 
 				// court types
-				filter_html = '';
+				html = '';
 				for(i=0; i<data_court_types.length; i++){
 					// determine if this button needs to be highlighted to show that it is currently active
 					active = court_type_id == data_court_types[i].id ? 'active' : '' ;
 					// build the button
-					filter_html += build_button('court_type', active, data_court_types[i].id, data_court_types[i].name, 'update_court_type');
+					html += build_button('court_type', active, data_court_types[i].id, data_court_types[i].name, 'update_court_type');
 				}
-				document.getElementById('filter-court-type').innerHTML = filter_html;
+				document.getElementById('filter-court-type').innerHTML = html;
 
 				// years
 				// - have to get list of possible years from the data
 				years = Object.keys(data).reverse(); // using reverse because the years get sorted and we want the most recent first
-				filter_html = '';
+				html = '';
 				for(i=0; i<years.length; i++){
 					// determine if this button needs to be highlighted to show that it is currently active
 					active = year == years[i] ? 'active' : '' ;
 					// build the button
-					filter_html += build_button('year', active, years[i], years[i], 'update_year');
+					html += build_button('year', active, years[i], years[i], 'update_year');
 				}
-				document.getElementById('filter-year').innerHTML = filter_html;
+				document.getElementById('filter-year').innerHTML = html;
 
 				// case types
 				// - have to get list of possible case types from the data
 				case_types = Object.keys(data[year][0])
 				// remove the id and name keys since they are not case types
 				case_types.splice(0,2);
-				filter_html = '';
+				html = '';
 				for(i=0; i<case_types.length; i++){
 					// get a reference to the case type object so we can get the id and name
 					tmp_case_type = data_case_types.find(function(item){
@@ -470,9 +599,9 @@
 					// determine if this button needs to be highlighted to show that it is currently active
 					active = case_type_id == data_case_types[i].id ? 'active' : '' ;
 					// build the button
-					filter_html += build_button('case_type', active, tmp_case_type.id, tmp_case_type.name, 'update_case_type');
+					html += build_button('case_type', active, tmp_case_type.id, tmp_case_type.name, 'update_case_type');
 				}
-				document.getElementById('filter-case-type').innerHTML = filter_html;
+				document.getElementById('filter-case-type').innerHTML = html;
 			}
 
 
@@ -620,6 +749,9 @@
 
 			// load the shapes and data into the map
 			load_map_data();
+
+			// update the table with the correct data
+			update_table();
 
 			// update the page title
 			update_page_title();
