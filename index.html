@@ -11,25 +11,26 @@
 
 		<style>
 			html, body {
+				font-family: 'courier new', helvetica, sans-serif;
 				height: 100%;
 				margin: 0;
 			}
 
 			#map {
 				width: 1050px;
-				height: 562px;
+				height: 540px;
 			}
 			.info {
 				padding: 6px 8px;
-				font: 14px/16px Arial, Helvetica, sans-serif;
-				background: white;
-				background: rgba(255,255,255,0.8);
-				box-shadow: 0 0 15px rgba(0,0,0,0.2);
-				border-radius: 5px;
+				font: 16px/16px 'Courier new', Helvetica, sans-serif;
+				background: green;
+				background: rgba(240,240,240,0.8);
+				box-shadow: 0 0 15px rgba(0,0,0,0.3);
+				border-radius: 3px;
 			}
 			.info h4 {
 				margin: 0 0 5px;
-				color: #777;
+				color: #555;
 			}
 			.legend {
 				text-align: left;
@@ -52,11 +53,12 @@
 			}
 			#filters b{
 				display: inline-block;
-				width: 115px;
+				width: 150px;
 			}
 			#filters button{
 				background-color: #eee;
 				color: black;
+				font-family: 'courier new', sans-serif;
 				padding: 4px 8px;
 				-moz-border-radius: 4px;
 				-webkit-border-radius: 4px;
@@ -68,7 +70,7 @@
 				color: black;
 			}
 			#filters button.active{
-				background-color: black;
+				background-color: gray;
 				color: white;
 			}
 		</style>
@@ -77,9 +79,9 @@
 
 		<div id='map'></div>
 		<div id='filters'>
-			<div><b>Court Types:</b> <span id="filter-court-type"></span></div>
-			<div><b>Case Types:</b> <span id="filter-case-type"></span></div>
-			<div><b>Years:</b> <span id="filter-year"></span></div>
+			<div><b>Уровень судов:</b> <span id="filter-court-type"></span></div>
+			<div><b>Тип дел:</b> <span id="filter-case-type"></span></div>
+			<div><b>Год:</b> <span id="filter-year"></span></div>
 		</div>
 
 		<!-- load the shapes -->
@@ -194,7 +196,7 @@
 
 			// create the text for the title
 			function create_page_title(){
-				return year + ' ' + court_type.name + ' Courts: ' + case_type.name + ' Cases';
+				return year + ' ' + court_type.name + ': ' + case_type.name + ' дела';
 			}
 
 			// update the page title
@@ -517,22 +519,24 @@
 
 			info.update = function (props) {
 				this._div.innerHTML = '<h4>' + create_page_title() + '</h4>' +
-					(props ? '<b>' + props.name + '</b>: ' + props.count : 'Hover over a region');
+					(props ? '<b>' + props.name + '</b>: ' + (props.count ? props.count: 'нет данных') : 'Наведите курсор');
 			};
 			info.addTo(map);
 
 
 			// get color depending on population count value
 			function getColor(d) {
-				return d > 1000 ? '#800026' :
-						d > 800  ? '#BD0026' :
-						d > 500  ? '#E31A1C' :
-						d > 300  ? '#FC4E2A' :
-						d > 50   ? '#FD8D3C' :
-						d > 20   ? '#FEB24C' :
-						d > 10   ? '#FED976' :
-									'#FFEDA0';
-			}
+                return d > 1000 ? '#67000d' :
+                        d > 800  ? '#a50f15' :
+                        d > 500  ? '#cb181d' :
+                        d > 200  ? '#ef3b2c' :
+                        d > 100  ? '#fb6a4a' :
+                        d > 50   ? '#fc9272' :
+                        d > 20   ? '#fcbba1' :
+                        d > 10   ? '#fee0d2' :
+                        d > 0    ? '#fff5f0' :
+                                             '#ccc';
+            }
 
 			// set the style for each shape in the map
 			function style(feature) {
@@ -590,18 +594,23 @@
 			legend.onAdd = function (map) {
 
 				var div = L.DomUtil.create('div', 'info legend'),
-					grades = [0, 10, 20, 50, 300, 500, 800, 1000],
-					labels = [],
-					from, to;
+	                    grades = [1, 10, 20, 50, 100, 300, 500, 800, 1000],
+	                    labels = [],
+	                    from, to;
 
-				for (i = 0; i < grades.length; i++) {
-					from = grades[i];
-					to = grades[i + 1];
+	                    // add NA label
+	                    labels.push(
+	                        '<i style="background:' + getColor(0) + '"></i> нет данных'
+	                    );
 
-					labels.push(
-						'<i style="background:' + getColor(from + 1) + '"></i> ' +
-						from + (to ? '&ndash;' + to : '+'));
-				}
+	                for (i = 0; i < grades.length; i++) {
+	                    from = grades[i];
+	                    to = grades[i + 1];
+
+	                    labels.push(
+	                        '<i style="background:' + getColor(from+1) + '"></i> ' +
+	                        from + (to ? '&ndash;' + to : '+'));
+	                }
 
 				div.innerHTML = labels.join('<br>');
 				return div;

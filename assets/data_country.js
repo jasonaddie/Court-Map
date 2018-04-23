@@ -3,26 +3,20 @@ var data_country = {
     {
       "id": 1,
       "name": "Кыргызстан",
-      "criminal": 640,
-      "administrative": 330
+      "criminal": 7165,
+      "civil": 20733,
+      "economic": 2488,
+      "administrative": 6368,
     }
   ],
    "2016": [
     {
       "id": 1,
       "name": "Кыргызстан",
-      "criminal": 640,
-      "administrative": 330
+      "criminal": 2347,
+      "civil": 6243,
+      "economic": 335,
+      "administrative": 1124
     }
-   ],
-   "2015": [
-    {
-      "id": 1,
-      "name": "Кыргызстан",
-      "criminal": 310,
-      "administrative": 570
-    }
-  ]
-}
-
-
+   ]
+ };
