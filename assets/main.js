@@ -20,7 +20,8 @@ var geojson, // store the geojson shapes to load into the map
     row_data, // data used for table row
     button_clicked,// indicates which button was clicked on
     default_table_view_type = 'case_type', // indicates that the default view type for the table is case types
-    table_view_type; // indicates that the current view type for the table
+    table_view_type, // indicates that the current view type for the table
+    current_locale; // indicate what the current locale is
 
 //////////////////////////
 // URL update functions
@@ -103,20 +104,20 @@ function update_url() {
 
 // create the text for the title
 function create_page_title(){
-  return year + ' ' + court_type.name + ': ' + case_type.name + ' дела';
+  return year + ' ' + locales[current_locale].court_types[court_type.id] + ': ' + locales[current_locale].case_types[case_type.id] + ' ' + locales[current_locale].data;
 }
 
 // update the page title
 function update_page_title(){
-  document.title = create_page_title() + ' | Courts Map';
+  document.title = create_page_title() + ' | ' + locales[current_locale].page_title;
 }
 
 // create the text for the title of the table
 function create_table_title(){
   if (table_view_type == 'case_type'){
-    return year + ' ' + court_type.name + ' Data';
+    return year + ' ' + locales[current_locale].court_types[court_type.id] + ' Data';
   }else if (table_view_type == 'year'){
-    return court_type.name + ': ' + case_type.name + ' Data';
+    return locales[current_locale].court_types[court_type.id] + ': ' + locales[current_locale].case_types[case_type.id] + ' Data';
   }
 
 }
@@ -193,10 +194,10 @@ function create_case_type_table(){
 
   // create table headers
   // - court type
-  html += '<th>' + court_type.name + '</th>';
+  html += '<th>' + locales[current_locale].court_types[court_type.id] + '</th>';
   // - case types
   for(i=0; i < data_case_types.length; i++){
-    html += '<th title="Click to sort">' + data_case_types[i].name + '</th>';
+    html += '<th title="' + locales[current_locale].table.click_sort + '">' + locales[current_locale].case_types[data_case_types[i].id] + '</th>';
   }
   html += '</tr></thead><tbody>';
 
@@ -225,10 +226,10 @@ function create_year_table(){
 
   // create table headers
   // - court type
-  html += '<th>' + court_type.name + '</th>';
+  html += '<th>' + locales[current_locale].court_types[court_type.id] + '</th>';
   // - years
   for(i=0; i < years.length; i++){
-    html += '<th title="Click to sort">' + years[i] + '</th>';
+    html += '<th title="' + locales[current_locale].table.click_sort + '">' + years[i] + '</th>';
   }
   html += '</tr></thead><tbody>';
 
@@ -253,9 +254,9 @@ function create_year_table(){
 
 function create_table_switcher_button(){
   if (table_view_type == 'case_type'){
-    return build_button('table_switcher', '', 'year', 'View by Year', 'table_switcher_click');
+    return build_button('table_switcher', '', 'year', locales[current_locale].table.view_year, 'table_switcher_click');
   }else if (table_view_type == 'year'){
-    return build_button('table_switcher', '', 'case_type', 'View by Case Type', 'table_switcher_click');
+    return build_button('table_switcher', '', 'case_type', locales[current_locale].table.view_case_type, 'table_switcher_click');
   }
 
 }
@@ -501,7 +502,7 @@ function initialize_data_and_buttons(){
     // determine if this button needs to be highlighted to show that it is currently active
     active = court_type_id == data_court_types[i].id ? 'active' : '' ;
     // build the button
-    html += build_button('court_type', active, data_court_types[i].id, data_court_types[i].name, 'court_type_click');
+    html += build_button('court_type', active, data_court_types[i].id, locales[current_locale].court_types[data_court_types[i].id], 'court_type_click');
   }
   document.getElementById('filter-court-type').innerHTML = html;
 
@@ -532,7 +533,7 @@ function initialize_data_and_buttons(){
     // determine if this button needs to be highlighted to show that it is currently active
     active = case_type_id == data_case_types[i].id ? 'active' : '' ;
     // build the button
-    html += build_button('case_type', active, tmp_case_type.id, tmp_case_type.name, 'case_type_click');
+    html += build_button('case_type', active, tmp_case_type.id, locales[current_locale].case_types[tmp_case_type.id], 'case_type_click');
   }
   document.getElementById('filter-case-type').innerHTML = html;
 }
@@ -547,6 +548,9 @@ function initialize_data_and_buttons(){
 //////////////////////////
 //////////////////////////
 //////////////////////////
+
+// set the current locale (this is used for the translations)
+current_locale = document.documentElement.lang;
 
 // get the url querystring parameters, if they exist
 get_url_params();
@@ -581,7 +585,7 @@ info.onAdd = function (map) {
 
 info.update = function (props) {
   this._div.innerHTML = '<h4>' + create_page_title() + '</h4>' +
-    (props ? '<b>' + props.name + '</b>: ' + (props.count ? props.count : 'нет данных') : 'Наведите курсор');
+    (props ? '<b>' + props.name + '</b>: ' + (props.count ? props.count : locales[current_locale].no_data) : locales[current_locale].hover_map);
 };
 info.addTo(map);
 
@@ -662,7 +666,7 @@ legend.onAdd = function (map) {
 
                 // add NA label
                 labels.push(
-                    '<i style="background:' + getColor(0) + '"></i> нет данных'
+                    '<i style="background:' + getColor(0) + '"></i> ' + locales[current_locale].no_data
                 );
 
             for (i = 0; i < grades.length; i++) {
