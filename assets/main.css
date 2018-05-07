@@ -1,0 +1,129 @@
+html, body {
+  font-family: 'Courier new', Helvetica, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 5px;
+}
+
+#map {
+  width: 1050px;
+  height: 540px;
+}
+.info {
+  padding: 6px 8px;
+  font: 16px/16px 'Courier new', Helvetica, sans-serif;
+  background: green;
+  background: rgba(240,240,240,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  border-radius: 3px;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #555;
+}
+.legend {
+  text-align: left;
+  line-height: 18px;
+  color: #555;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+
+#filters{
+  position: relative;
+  width: 1050px;
+}
+#filters div{
+  margin-bottom: 5px;
+}
+#filters b{
+  display: inline-block;
+  width: 150px;
+}
+#filters button,
+#table_switcher button{
+  background-color: #eee;
+  color: black;
+  font-family: 'Courier new', Helvetica, sans-serif;
+  padding: 4px 8px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px; /* future proofing */
+  -khtml-border-radius: 4px; /* for old Konqueror browsers */
+}
+#filters button:active,
+#table_switcher button:active{
+  background-color: white;
+  color: black;
+}
+#filters button.active{
+  background-color: gray;
+  color: white;
+}
+#filters #language-switcher{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+#filters #language-switcher a,
+#filters #language-switcher a:visited{
+  color: #ef3b2c;
+}
+#filters #language-switcher a.active{
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+#table_title_container{
+  margin: 20px 0 10px;
+  position: relative;
+  width: 1050px;
+}
+#table_title{
+  font-weight: bold;
+  font-size: larger;
+  display: inline-block;
+}
+#table_switcher{
+  display: inline-block;
+  right: 0;
+  position: absolute;
+}
+
+.table {
+  /* width: 100%; */
+  width: 1050px;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  cursor: pointer;
+}
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+.table .table {
+  background-color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
