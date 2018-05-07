@@ -706,5 +706,359 @@ var data_districts = {
     "economic": "",
     "administrative": ""
   }
+],
+   "2015": [
+  {
+    "id": 1,
+    "name": "Баткенский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 2,
+    "name": "Кадамжайский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 3,
+    "name": "Лейлекский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 4,
+    "name": "г. Бишкек",
+    "criminal": 683,
+    "civil": 1110,
+    "economic": "",
+    "administrative": 515
+  },
+  {
+    "id": 5,
+    "name": "Аламединский район",
+    "criminal": 17,
+    "civil": 16,
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 6,
+    "name": "Чуйский район",
+    "criminal": 2,
+    "civil": 12,
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 7,
+    "name": "Жайыльский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 8,
+    "name": "Кеминский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 9,
+    "name": "Московский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 10,
+    "name": "Панфиловский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 11,
+    "name": "Сокулукский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 12,
+    "name": "Ысык-Атинский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 13,
+    "name": "Аксыйский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 14,
+    "name": "Ала-Букинский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 15,
+    "name": "Базар-Коргонский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 16,
+    "name": "Чаткальский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 17,
+    "name": "Ноокенский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 18,
+    "name": "Сузакский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 19,
+    "name": "Тогуз-Тороуский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 20,
+    "name": "Токтогульский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 21,
+    "name": "Ак-Талинский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 22,
+    "name": "Ат-Башинский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 23,
+    "name": "Жумгальский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 24,
+    "name": "Кочкорский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 25,
+    "name": "Нарынский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 26,
+    "name": "оз. Сон-Куль",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 27,
+    "name": "г. Ош",
+    "criminal": 1,
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 28,
+    "name": "Алайский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 29,
+    "name": "Араванский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 30,
+    "name": "Чон-Алайский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 31,
+    "name": "Кара-Кулджинский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 32,
+    "name": "Кара-Суйский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 33,
+    "name": "Ноокатский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 34,
+    "name": "Узгенский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 35,
+    "name": "Бакай-Атинский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 36,
+    "name": "Кара-Бууринский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 37,
+    "name": "Манасский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 38,
+    "name": "Таласский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 39,
+    "name": "Ак-Суйский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 40,
+    "name": "Джети-Огузский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 41,
+    "name": "Тюпский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 42,
+    "name": "Тонский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 43,
+    "name": "оз. Иссык-Куль",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 44,
+    "name": "Иссык-Кульский район",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  }
 ]
 };

@@ -146,5 +146,80 @@ var data_regions = {
     "economic": 1,
     "administrative": 27
   }
+],
+ "2015":
+[
+  {
+    "id": 1,
+    "name": "Баткенская область",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 2,
+    "name": "г. Бишкек",
+    "criminal": 683,
+    "civil": 1110,
+    "economic": "",
+    "administrative": 515
+  },
+  {
+    "id": 3,
+    "name": "Чуйская область",
+    "criminal": 21,
+    "civil": 106,
+    "economic": "",
+    "administrative": 3
+  },
+  {
+    "id": 4,
+    "name": "Джалал-Абадская область",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 5,
+    "name": "Нарынская область",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 6,
+    "name": "г. Ош",
+    "criminal": 1,
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 7,
+    "name": "Ошская область",
+    "criminal": "",
+    "civil": 1,
+    "economic": "",
+    "administrative": 3
+  },
+  {
+    "id": 8,
+    "name": "Талаская область",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  },
+  {
+    "id": 9,
+    "name": "Иссык-Кульская область",
+    "criminal": "",
+    "civil": "",
+    "economic": "",
+    "administrative": ""
+  }
 ]
 };

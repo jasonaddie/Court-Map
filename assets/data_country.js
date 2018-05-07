@@ -18,5 +18,15 @@ var data_country = {
       "economic": 335,
       "administrative": 1124
     }
-   ]
+  ],
+   "2015": [
+  {
+    "id": 1,
+    "name": "Кыргызстан",
+    "criminal": 1128,
+    "civil": 2206,
+    "economic": 0,
+    "administrative": 617
+  }
+]
  };

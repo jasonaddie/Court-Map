@@ -115,9 +115,9 @@ function update_page_title(){
 // create the text for the title of the table
 function create_table_title(){
   if (table_view_type == 'case_type'){
-    return year + ' ' + locales[current_locale].court_types[court_type.id] + ' Data';
+    return year + ' ' + locales[current_locale].court_types[court_type.id] + ' ' + locales[current_locale].table_data;
   }else if (table_view_type == 'year'){
-    return locales[current_locale].court_types[court_type.id] + ': ' + locales[current_locale].case_types[case_type.id] + ' Data';
+    return locales[current_locale].court_types[court_type.id] + ': ' + locales[current_locale].case_types[case_type.id] + locales[current_locale].table_data;
   }
 
 }

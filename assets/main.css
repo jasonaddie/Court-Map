@@ -1,8 +1,26 @@
 html, body {
-  font-family: 'Courier new', Helvetica, sans-serif;
+  font-family: 'Century Gothic', Helvetica, sans-serif;
   height: 100%;
   margin: 0;
   padding: 5px;
+}
+a,
+a:visited{
+  color: #ef3b2c;
+}
+
+#main-container{
+  margin: 0 auto;
+  width:  1050px;
+}
+
+#language-switcher{
+  text-align:  right;
+}
+#language-switcher a.active{
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 #map {
@@ -11,8 +29,7 @@ html, body {
 }
 .info {
   padding: 6px 8px;
-  font: 16px/16px 'Courier new', Helvetica, sans-serif;
-  background: green;
+  font: 14px/16px 'Century Gothic', Helvetica, sans-serif;
   background: rgba(240,240,240,0.8);
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
   border-radius: 3px;
@@ -34,10 +51,6 @@ html, body {
   opacity: 0.7;
 }
 
-#filters{
-  position: relative;
-  width: 1050px;
-}
 #filters div{
   margin-bottom: 5px;
 }
@@ -49,7 +62,7 @@ html, body {
 #table_switcher button{
   background-color: #eee;
   color: black;
-  font-family: 'Courier new', Helvetica, sans-serif;
+  font-family: 'Century Gothic', Helvetica, sans-serif;
   padding: 4px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -65,24 +78,9 @@ html, body {
   background-color: gray;
   color: white;
 }
-#filters #language-switcher{
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-#filters #language-switcher a,
-#filters #language-switcher a:visited{
-  color: #ef3b2c;
-}
-#filters #language-switcher a.active{
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
-}
 #table_title_container{
   margin: 20px 0 10px;
   position: relative;
-  width: 1050px;
 }
 #table_title{
   font-weight: bold;
@@ -96,9 +94,7 @@ html, body {
 }
 
 .table {
-  /* width: 100%; */
-  width: 1050px;
-  max-width: 100%;
+  width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
 }
