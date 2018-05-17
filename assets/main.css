@@ -4,22 +4,44 @@ html, body {
   margin: 0;
   padding: 5px;
 }
+
 a,
 a:visited{
   color: #ef3b2c;
 }
-
 #main-container{
   margin: 0 auto;
   width:  1050px;
 }
 
-#language-switcher{
+.header{
+  background-color: rgb(0, 102, 149);
+  color: white;
+  position: relative;
+  margin-top: -10px;
+  padding: 20px;
+}
+.header h1{
+  margin: 0;
+}
+.header .right-side{
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+.header .share-links {
+  text-align: right;
+}
+.header .right-side .language-switcher{
   text-align:  right;
 }
-#language-switcher a.active{
-  color: black;
+.header .right-side .language-switcher a,
+.header .right-side .language-switcher a:visited{
+  color: white;
   font-weight: bold;
+}
+.header .right-side .language-switcher a.active{
+  color: black;
   text-decoration: none;
 }
 
@@ -51,6 +73,11 @@ a:visited{
   opacity: 0.7;
 }
 
+#filters {
+  margin: 20px 0;
+  padding-top: 20px;
+  border-top: solid 1px #dee2e6;
+}
 #filters div{
   margin-bottom: 5px;
 }
@@ -122,4 +149,24 @@ a:visited{
 
 .table-hover tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.075);
+}
+
+.sources{
+  margin: 20px 0;
+  border-top: solid 1px #dee2e6;
+}
+.sources p{
+  font-size: 13px;
+}
+
+.footer{
+  margin: 20px 0;
+  border-top: solid 1px #dee2e6;
+}
+.footer p{
+  font-size: 12px;
+}
+.footer .logos > div{
+  display: inline-block;
+  margin-right: 20px;
 }

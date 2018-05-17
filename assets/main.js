@@ -173,7 +173,7 @@ function load_map_data(){
 
       // add the data
       if (data_item){
-        shapes.features[i].properties.name = data_item.name;
+        shapes.features[i].properties.name = locales[current_locale][court_type_id][data_item.id];
         shapes.features[i].properties.count = data_item[case_type_id];
       }
     }
@@ -207,7 +207,7 @@ function create_case_type_table(){
     html += '<tr>';
 
     // name
-    html += '<td>' + row_data.name + '</td>';
+    html += '<td>' + locales[current_locale][court_type_id][row_data.id] + '</td>';
 
     // case types
     for(j=0; j < data_case_types.length; j++){
