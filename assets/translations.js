@@ -6,10 +6,10 @@ var locales = {
       district: 'District'
     },
     case_types: {
-      criminal: 'Criminal',
-      civil: 'Civil',
-      economic: 'Economic',
-      administrative: 'Administrative'
+      criminal: 'Criminal ',
+      civil: 'Civil ',
+      economic: 'Economic ',
+      administrative: 'Administrative '
     },
     country: {
       1: 'Kyrgyzstan'
@@ -154,7 +154,7 @@ var locales = {
       43:	'Ысык-Көл ',
       44:	'Ысык-Көл району'
     },
-    page_title: 'СОТ ЧЕЧИМДЕРИН КӨРҮҮ',
+    page_title: 'Сот чечимдерин көрүү',
     data: 'иштер',
     table_data: '',
     no_data: 'маалымат жок',

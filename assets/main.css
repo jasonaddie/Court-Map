@@ -166,7 +166,16 @@ a:visited{
 .footer p{
   font-size: 12px;
 }
-.footer .logos > div{
+.footer #logos{
+  clear: both;
+}
+.footer #logos > div{
   display: inline-block;
-  margin-right: 20px;
+}
+.footer #logos #usaid-logo{
+  float: left;
+}
+.footer #logos #idlo-logo{
+  float: right;
+  text-align: right;
 }
