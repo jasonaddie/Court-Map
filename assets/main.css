@@ -171,9 +171,13 @@ a:visited{
 }
 .footer #logos > div{
   display: inline-block;
+  margin-top: 40px;
 }
 .footer #logos #usaid-logo{
   float: left;
+}
+.footer #usaid-logo img {
+  width: 180px;
 }
 .footer #logos #idlo-logo{
   float: right;
